@@ -89,7 +89,7 @@ For this example, we define:
 * two actions: `Lock` and `Unlock`
 * and four transitions: `pushLocked`, `unlock`, `coinUnlocked` and `lock`
 
-#### 1. First, let's define states
+#### 1. First, let's define states   定义状态
 
 ```java
 State locked = new State("locked");
@@ -100,22 +100,27 @@ states.add(locked);
 states.add(unlocked);
 ```
 
-#### 2. Then, define events
+#### 2. Then, define events   定义事件类型
 
 ```java
 class PushEvent extends AbstractEvent { }
 class CoinEvent extends AbstractEvent { }
 ```
 
-#### 3. Then transitions
-
+#### 3. Then transitions   构建状态转换器
+由4个元素组成
+* 原状态
+* 事件类型
+* 事件处理器
+* 目标状态
+##### 
 ```java
 Transition unlock = new TransitionBuilder()
         .name("unlock")
-        .sourceState(locked)
-        .eventType(CoinEvent.class)
-        .eventHandler(new Unlock())
-        .targetState(unlocked)
+        .sourceState(locked)   // 原状态
+        .eventType(CoinEvent.class)  // 事件类型
+        .eventHandler(new Unlock())   // 事件处理器
+        .targetState(unlocked)    //目标状态
         .build();
 
 Transition pushLocked = new TransitionBuilder()
@@ -141,7 +146,7 @@ Transition coinUnlocked = new TransitionBuilder()
         .build();
 ```
 
-#### 4. And finally the finite state machine
+#### 4. And finally the finite state machine  构建状态机
 
 ```java
 FiniteStateMachine turnstileStateMachine = new FiniteStateMachineBuilder(states, locked)
