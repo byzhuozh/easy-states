@@ -42,7 +42,8 @@ public class FiniteStateMachineBuilderTest {
         State s1 = new State("s1");
         State s2 = new State("s2");
         Set<State> states = new HashSet<>();
-        states.add(s1);states.add(s2);
+        states.add(s1);
+        states.add(s2);
         Transition transition = new TransitionBuilder()
                 .sourceState(s1)
                 .targetState(s2)

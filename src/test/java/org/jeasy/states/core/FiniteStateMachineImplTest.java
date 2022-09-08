@@ -56,6 +56,7 @@ public class FiniteStateMachineImplTest {
         Set<State> states = new HashSet<>();
         states.add(s1);
         states.add(s2);
+
         stateMachine = new FiniteStateMachineImpl(states, s1);
     }
 

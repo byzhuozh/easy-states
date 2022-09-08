@@ -30,16 +30,26 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 有限状态机实现
+ */
 final class FiniteStateMachineImpl implements FiniteStateMachine {
 
     private static final Logger LOGGER = Logger.getLogger(FiniteStateMachineImpl.class.getSimpleName());
 
+    //当前状态
     private State currentState;
+    //初始化状态
     private final State initialState;
+    //最终状态集
     private final Set<State> finalStates;
+    //状态集
     private final Set<State> states;
+    //状态转换器集合
     private final Set<Transition> transitions;
+    //最新事件
     private Event lastEvent;
+    //最新状态转换器
     private Transition lastTransition;
 
     FiniteStateMachineImpl(final Set<State> states, final State initialState) {
@@ -56,7 +66,7 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
     @Override
     @SuppressWarnings("unchecked")
     public final synchronized State fire(final Event event) throws FiniteStateMachineException {
-
+        //如果当前状态已经是终态，则直接退出
         if (!finalStates.isEmpty() && finalStates.contains(currentState)) {
             LOGGER.log(Level.WARNING, "FSM is in final state '" + currentState.getName() + "', event " + event + " is ignored.");
             return currentState;
@@ -70,21 +80,24 @@ final class FiniteStateMachineImpl implements FiniteStateMachine {
         for (Transition transition : transitions) {
             if (
                     currentState.equals(transition.getSourceState()) && //fsm is in the right state as expected by transition definition
-                    transition.getEventType().equals(event.getClass()) && //fired event type is as expected by transition definition
-                    states.contains(transition.getTargetState()) //target state is defined
-                    ) {
+                            transition.getEventType().equals(event.getClass()) && //fired event type is as expected by transition definition
+                            states.contains(transition.getTargetState()) //target state is defined
+            ) {
                 try {
                     //perform action, if any
                     if (transition.getEventHandler() != null) {
                         transition.getEventHandler().handleEvent(event);
                     }
+
+                    //修改当前状态机的状态
                     //transit to target state
                     currentState = transition.getTargetState();
 
                     //save last triggered event and transition
+                    //更新当前的事件类型
                     lastEvent = event;
+                    //当前执行的状态转换器
                     lastTransition = transition;
-
                     break;
                 } catch (Exception e) {
                     LOGGER.log(Level.SEVERE, "An exception occurred during handling event " + event + " of transition " + transition, e);

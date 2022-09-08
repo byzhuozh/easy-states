@@ -54,8 +54,11 @@ public class FiniteStateMachineBuilder {
         }
     }
 
+    //有限状态机实现
     private final FiniteStateMachineImpl finiteStateMachine;
+    //有限状态机-状态校验器
     private final FiniteStateMachineDefinitionValidator finiteStateMachineDefinitionValidator;
+    //状态转移校验器
     private final TransitionDefinitionValidator transitionDefinitionValidator;
 
     /**
@@ -128,5 +131,4 @@ public class FiniteStateMachineBuilder {
         finiteStateMachineDefinitionValidator.validateFiniteStateMachineDefinition(finiteStateMachine);
         return finiteStateMachine;
     }
-
 }

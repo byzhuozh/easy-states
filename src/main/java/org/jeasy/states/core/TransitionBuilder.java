@@ -39,9 +39,12 @@ import org.jeasy.states.api.Transition;
  * </ul>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *
+ * 状态转换构造器
  */
 public class TransitionBuilder {
 
+    //状态转换构造器实现
     private final TransitionImpl transition;
 
     /**

@@ -27,6 +27,8 @@ package org.jeasy.states.api;
  * Abstraction for actions to perform when an event is triggered.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ *
+ * 事件处理器
  */
 public interface EventHandler<E extends Event> {
 

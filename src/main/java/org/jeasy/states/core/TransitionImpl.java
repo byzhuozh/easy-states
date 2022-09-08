@@ -31,10 +31,15 @@ import org.jeasy.states.util.Utils;
 
 final class TransitionImpl<E extends Event> implements Transition {
 
+    //名字
     private String name;
+    //源状态
     private State sourceState;
+    //目标状态
     private State targetState;
+    //事件类型
     private Class<E> eventType;
+    //事件处理器
     private EventHandler<E> eventHandler;
 
     public TransitionImpl() {
